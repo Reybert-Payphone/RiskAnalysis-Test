@@ -14,16 +14,24 @@ internal sealed class CreateRiskAnalysisCommandHandler(
 {
     public async Task<Result> Handle(CreateRiskAnalysisCommand request, CancellationToken cancellationToken)
     {
-        var score = await _scoreService.CalculateRiskScore(
+        var scoreResponse = await _scoreService.CalculateRiskScore(
             request.Name,
             request.DocumentIdentity,
             request.Amount
             );
 
+
+
         var riskAnalysis = Domain.Entities.RiskAnalysis.Create(
             request.Name,
             request.DocumentIdentity,
-            request.Amount
+            request.Amount,
+            scoreResponse.Score
             );
+
+        _riskAnalysisRepository.Add(riskAnalysis);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Success();
     }
 }

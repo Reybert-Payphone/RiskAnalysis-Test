@@ -81,7 +81,7 @@ Ver documento detallado en [ARCHITECTURE.md](./ARCHITECTURE.md)
 
 ```
 src/
-├── RiskScore.Api/           # Capa de presentación (API)
+├── RiskScore.Api/           # Capa de presentación (API/Console)
 ├── RiskScore.Application/   # Lógica de negocio
 ├── RiskScore.Domain/        # Entidades y contratos
 └── RiskScore.Infrastructure/ # Implementaciones externas (API, BD)
@@ -107,15 +107,35 @@ tests/
 
 ## 🧪 Tests
 
-Pendientes como deuda tecnica.
+```bash
+# Ejecutar tests
+dotnet test
+
+# Con cobertura
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+### Tests Implementados
+
+| Componente | Descripción | Estado |
+|------------|-------------|--------|
+| *(CreditEvaluator)* | *(Validación reglas de negocio)* | ⬜ |
+| *(ExternalApiClient)* | *(Manejo de respuestas/errores)* | ⬜ |
+| *(...)* | *(...)* | ⬜ |
 
 ---
 
 ## 📌 Decisiones Técnicas
 
-### ¿Por qué [decisión]?
+### ¿Por qué API REST en lugar de aplicación de consola?
 
-Se decidió crear un API 
+Opté por desarrollar una **API REST** porque ofrece mayor escalabilidad a largo plazo. Una API permite:
+
+- Integración con múltiples clientes (web, mobile, otros servicios)
+- Escalamiento horizontal mediante balanceadores de carga
+- Facilidad para implementar versionado de endpoints
+- Mayor alineación con arquitecturas de microservicios
+- Mejor preparación para el producto "PayLater" en producción
 
 ### Patrones Utilizados
 
@@ -138,9 +158,9 @@ Se decidió crear un API
 
 ## 📝 Pendientes / Mejoras Futuras
 
-- [ ] *(Mejora 1)*
-- [ ] *(Mejora 2)*
-- [ ] *(Mejora 3)*
+- [ ] Implementación con servicio externo
+- [ ] Unit Tests
+- [ ] Pruebas e2e
 
 ---
 
